@@ -90,6 +90,32 @@
             box-shadow: 0 0 20px white;
         }
 
+        .slider-container {
+            position: relative;
+            width: 250px;
+            height: 350px;
+            /* Adjust based on photo aspect ratio */
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 0 20px white;
+        }
+
+        .slider-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slider-img.active {
+            opacity: 1;
+        }
+
         .countdown {
             font-size: 22px;
             margin-top: 20px;
@@ -110,7 +136,10 @@
     <div id="mainContent">
         <h1>🎉 Happy Birthday, PRAVEEN ❤️</h1>
 
-        <img src="photo.jpg" alt="Birthday Celebration">
+        <div class="slider-container">
+            <img src="photo1.jpg" class="slider-img active" alt="Birthday Photo 1">
+            <img src="photo2.jpg" class="slider-img" alt="Birthday Photo 2">
+        </div>
 
         <p>You are my best friend, my happiness, my forever person 💖</p>
 
@@ -130,6 +159,7 @@
                 document.getElementById("mainContent").style.display = "block";
                 startHearts();
                 playMusic();
+                startSlider();
             } else {
                 alert("Wrong Password 😢");
             }
@@ -169,6 +199,18 @@
                 document.getElementById("countdown").innerHTML = "🎂 It's Her Birthday Today! 🎉";
             }
         }, 1000);
+
+        /* Image Slider Logic */
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-img');
+
+        function startSlider() {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3000); // Change image every 3 seconds
+        }
 
     </script>
 
