@@ -117,9 +117,8 @@
 
         <div class="countdown" id="countdown"></div>
 
-        <audio autoplay loop>
-            <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_783ccc728d.mp3" type="audio/mpeg">
-        </audio>
+        <!-- YouTube Hidden Player for Background Music -->
+        <div id="youtube-player" style="display:none;"></div>
     </div>
 
     <script>
@@ -131,6 +130,7 @@
                 document.getElementById("login").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
                 startHearts();
+                playMusic();
             } else {
                 alert("Wrong Password 😢");
             }
@@ -171,6 +171,30 @@
             }
         }, 1000);
 
+    </script>
+
+    <!-- YouTube IFrame API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'f3_VT74HZkk', // Specific Video ID
+                playerVars: {
+                    'autoplay': 0,
+                    'loop': 1,
+                    'playlist': 'f3_VT74HZkk'
+                }
+            });
+        }
+
+        function playMusic() {
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
+        }
     </script>
 
 </body>
