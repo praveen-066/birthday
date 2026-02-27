@@ -55,52 +55,125 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff9ac1 40%, #ffc3dd 100%);
-    gap: 1.5rem;
+    background: linear-gradient(135deg, #1a0030 0%, #6b0f6e 40%, #ff4d9e 100%);
+    gap: 1.6rem;
     padding: 2rem;
+    overflow: hidden;
   }
-  #lock-screen h2 {
+
+  /* Animated stars */
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--s) ease-in-out infinite alternate;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%   { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  /* Glowing orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: orbFloat var(--t) ease-in-out infinite alternate;
+  }
+  @keyframes orbFloat {
+    0%   { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-30px) scale(1.1); }
+  }
+
+  .lock-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+    box-shadow: 0 0 60px rgba(255,77,158,0.3), 0 20px 60px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .lock-icon {
+    font-size: 3.5rem;
+    animation: lockPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(255,180,220,0.8));
+  }
+  @keyframes lockPulse {
+    0%,100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255,180,220,0.8)); }
+    50%     { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(255,100,200,1)); }
+  }
+
+  .lock-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     color: #fff;
     text-align: center;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    text-shadow: 0 0 20px rgba(255,150,220,0.8), 0 2px 10px rgba(0,0,0,0.3);
+    line-height: 1.2;
   }
-  #lock-screen p {
-    color: rgba(255,255,255,0.9);
-    font-size: 1.1rem;
+  .lock-subtitle {
+    color: rgba(255,220,240,0.9);
+    font-size: 1rem;
     text-align: center;
+    letter-spacing: 1px;
   }
+
   #password-input {
-    padding: 0.9rem 1.5rem;
-    border: none;
+    padding: 1rem 1.8rem;
+    border: 2px solid rgba(255,150,220,0.4);
     border-radius: 50px;
     font-size: 1.1rem;
     font-family: 'Quicksand', sans-serif;
     outline: none;
-    width: 280px;
+    width: 100%;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    background: rgba(255,255,255,0.95);
-    color: var(--deep);
-    letter-spacing: 2px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    letter-spacing: 3px;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(255,100,200,0.2);
   }
+  #password-input::placeholder { color: rgba(255,200,230,0.6); letter-spacing: 1px; }
+  #password-input:focus {
+    border-color: rgba(255,150,220,0.9);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 30px rgba(255,100,200,0.5);
+  }
+
   #unlock-btn {
-    padding: 0.8rem 2.5rem;
-    background: white;
-    color: var(--rose);
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, #ff4d9e, #c62a8a);
+    color: white;
     border: none;
     border-radius: 50px;
     font-size: 1.1rem;
     font-weight: 700;
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    transition: all 0.2s;
+    box-shadow: 0 6px 30px rgba(255,77,158,0.5);
+    transition: all 0.3s;
+    letter-spacing: 1px;
+    width: 100%;
   }
-  #unlock-btn:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(0,0,0,0.2); }
-  #error-msg { color: #fff3; font-size: 0.9rem; min-height: 1.2rem; transition: color 0.2s; }
-  #error-msg.show { color: #fff; }
+  #unlock-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 40px rgba(255,77,158,0.7);
+    background: linear-gradient(135deg, #ff69b0, #d63096);
+  }
+  #unlock-btn:active { transform: scale(0.97); }
+
+  #error-msg { color: rgba(255,200,220,0); font-size: 0.9rem; min-height: 1.2rem; transition: color 0.3s; text-align: center; }
+  #error-msg.show { color: #ffb3d1; }
 
   /* Main page */
   #main-page { display: none; position: relative; z-index: 1; }
@@ -282,12 +355,17 @@
 
 <!-- Lock Screen -->
 <div id="lock-screen">
-  <div style="font-size:3rem">🔒</div>
-  <h2>Birthday Surprise ❤️</h2>
-  <p>Enter Secret Password 💕</p>
-  <input id="password-input" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') unlock()">
-  <button id="unlock-btn" onclick="unlock()">Unlock Surprise 🔓</button>
-  <div id="error-msg">​</div>
+  <div class="orb" style="width:300px;height:300px;background:rgba(255,0,150,0.25);top:-80px;left:-80px;--t:6s;"></div>
+  <div class="orb" style="width:250px;height:250px;background:rgba(150,0,255,0.2);bottom:-60px;right:-60px;--t:8s;"></div>
+  <div class="orb" style="width:180px;height:180px;background:rgba(255,100,200,0.2);top:50%;left:70%;--t:5s;"></div>
+  <div class="lock-card">
+    <div class="lock-icon">🔐</div>
+    <div class="lock-title">Birthday Surprise<br>for Rashh 🎀</div>
+    <div class="lock-subtitle">✨ Enter the Secret Password ✨</div>
+    <input id="password-input" type="password" placeholder="Type password here..." onkeydown="if(event.key==='Enter') unlock()">
+    <button id="unlock-btn" onclick="unlock()">💖 Unlock Surprise 💖</button>
+    <div id="error-msg">​</div>
+  </div>
 </div>
 
 <!-- Hidden YouTube Player -->
@@ -338,6 +416,16 @@
 </div>
 
 <script>
+  // Generate stars on lock screen
+  const lockScreen = document.getElementById('lock-screen');
+  for (let i = 0; i < 60; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--s:${(Math.random()*3+1).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s;`;
+    lockScreen.appendChild(star);
+  }
+
   // Generate floating hearts
   const heartsBg = document.getElementById('hearts-bg');
   const emojis = ['❤️','💖','💗','💕','🌸','✨','🎉','🎀'];
@@ -379,7 +467,7 @@
   function unlock() {
     const val = document.getElementById('password-input').value;
     const errMsg = document.getElementById('error-msg');
-    if (val === 'rashh' || val === 'Rashh' || val === 'RASHH' || val === '1234' || val === 'birthday') {
+    if (val === 'HappyBirthDayRashh') {
       document.getElementById('lock-screen').style.display = 'none';
       document.getElementById('main-page').style.display = 'block';
       document.getElementById('music-btn').style.display = 'block';
