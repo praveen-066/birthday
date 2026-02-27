@@ -467,7 +467,7 @@
   function unlock() {
     const val = document.getElementById('password-input').value;
     const errMsg = document.getElementById('error-msg');
-    if (val === 'HappyBirthDayRashh') {
+    if (val.toLowerCase() === 'happybirthdayrashh') {
       document.getElementById('lock-screen').style.display = 'none';
       document.getElementById('main-page').style.display = 'block';
       document.getElementById('music-btn').style.display = 'block';
